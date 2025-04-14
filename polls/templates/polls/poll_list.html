@@ -1,0 +1,24 @@
+{% extends 'polls/base.html' %}
+
+{% block content %}
+    <a href="{% url 'poll_create' %}" class="btn btn-primary mb-3">Create New Poll</a>
+    
+    {% if polls %}
+    <div class="list-group">
+        {% for poll in polls %}
+        <div class="list-group-item">
+            <div class="d-flex justify-content-between">
+                <h5><a href="{% url 'poll_detail' poll.pk %}">{{ poll.question }}</a></h5>
+                <div>
+                    <a href="{% url 'poll_update' poll.pk %}" class="btn btn-sm btn-warning">Edit</a>
+                    <a href="{% url 'poll_delete' poll.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                </div>
+            </div>
+            <small class="text-muted">Published on {{ poll.pub_date|date:"F j, Y" }}</small>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p>No polls available.</p>
+    {% endif %}
+{% endblock %}

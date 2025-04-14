@@ -1,0 +1,35 @@
+{% extends 'polls/base.html' %}
+
+{% block content %}
+<div class="container text-center py-5">
+    <h1 class="display-4 mb-4">
+        <span class="typing-container">
+            <span class="typing-text">Welcome to the Poll App</span>
+        </span>
+    </h1>
+    <p class="lead mb-5">Create and share polls with your community. Get instant results and insights.</p>
+    
+    <div class="row justify-content-center mb-5">
+        <div class="col-md-6">
+            <div class="d-grid gap-3">
+                <a href="{% url 'poll_create' %}" class="btn btn-primary btn-lg">Create a Poll</a>
+                <a href="{% url 'poll_list' %}" class="btn btn-outline-primary btn-lg">View All Polls</a>
+            </div>
+        </div>
+    </div>
+
+    {% if latest_polls %}
+    <div class="mt-5">
+        <h3>Latest Polls</h3>
+        <div class="list-group">
+            {% for poll in latest_polls|slice:":3" %}
+            <a href="{% url 'poll_detail' poll.pk %}" class="list-group-item list-group-item-action">
+                <h5 class="mb-1">{{ poll.question }}</h5>
+                <small class="text-muted">Published on {{ poll.pub_date|date:"F j, Y" }}</small>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
